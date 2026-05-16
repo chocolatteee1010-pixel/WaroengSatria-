@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WaroengSatria – Cita Rasa Nusantara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F5EDD8;
+      --ivory:   #FDF8EE;
+      --brown:   #3B1F0A;
+      --brown2:  #5C3317;
+      --terra:   #C0622A;
+      --gold:    #C8971F;
+      --gold-lt: #E8B84B;
+      --dark:    #1A0D04;
+      --shadow:  rgba(59,31,10,.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: linear-gradient(to bottom, rgba(26,13,4,.9) 0%, transparent 100%);
+      backdrop-filter: blur(4px);
+      transition: background .4s;
+    }
+    nav.scrolled { background: rgba(26,13,4,.97); }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--gold-lt);
+    }
+    .nav-logo span { color: var(--terra); }
+
+    nav ul { list-style: none; display: flex; gap: 2.4rem; }
+    nav ul li a {
+      color: var(--cream); text-decoration: none;
+      font-size: .78rem; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      position: relative; padding-bottom: 3px;
+      transition: color .3s;
+    }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width .3s;
+    }
+    nav ul li a:hover { color: var(--gold-lt); }
+    nav ul li a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--terra); color: #fff !important;
+      padding: .45rem 1.3rem !important;
+      border-radius: 2px;
+      transition: background .3s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HERO ── */
+    #hero {
+      height: 100vh; min-height: 680px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: var(--dark);
+    }
+
+    /* batik SVG bg */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 40%, rgba(192,98,42,.22) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 80%, rgba(200,151,31,.12) 0%, transparent 60%);
+    }
+
+    /* decorative batik ring */
+    .hero-ring {
+      position: absolute;
+      width: 640px; height: 640px;
+      border: 1px solid rgba(200,151,31,.18);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      animation: spinSlow 40s linear infinite;
+    }
+    .hero-ring::before {
+      content: ''; position: absolute; inset: 28px;
+      border: 1px dashed rgba(200,151,31,.12);
+      border-radius: 50%;
+      animation: spinSlow 30s linear infinite reverse;
+    }
+    @keyframes spinSlow { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* decorative dots */
+    .hero-dots {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+    .hero-dots span {
+      position: absolute; border-radius: 50%;
+      background: var(--gold); opacity: 0;
+      animation: dotFloat 6s ease-in-out infinite;
+    }
+
+    .hero-content {
+      position: relative; text-align: center;
+      padding: 2rem;
+      animation: fadeUp .9s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold-lt); border: 1px solid rgba(200,151,31,.4);
+      padding: .35rem 1.2rem; border-radius: 1px;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.4rem, 9vw, 7rem);
+      font-weight: 700; line-height: .95;
+      letter-spacing: -.01em;
+      color: var(--cream);
+    }
+    .hero-title em { font-style: italic; color: var(--gold-lt); }
+
+    .hero-sub {
+      margin: 1.4rem auto 2.8rem;
+      max-width: 480px;
+      font-size: .95rem; line-height: 1.8;
+      color: rgba(245,237,216,.6);
+      letter-spacing: .04em;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--terra); color: #fff;
+      padding: .85rem 2.4rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: .78rem; font-weight: 600;
+      letter-spacing: .15em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background .3s, transform .2s;
+    }
+    .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent; color: var(--cream);
+      padding: .85rem 2.4rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      letter-spacing: .15em; text-transform: uppercase;
+      text-decoration: none; border: 1px solid rgba(245,237,216,.35); cursor: pointer;
+      transition: border-color .3s, color .3s, transform .2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold-lt); color: var(--gold-lt);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(245,237,216,.4);
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+    .hero-scroll::after {
+      content: ''; width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(200,151,31,.5), transparent);
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(7px); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 2rem; }
+
+    .section-label {
+      font-size: .65rem; letter-spacing: .24em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 600; line-height: 1.1;
+      color: var(--cream);
+    }
+    .section-title em { font-style: italic; color: var(--gold-lt); }
+    .divider {
+      width: 56px; height: 2px;
+      background: linear-gradient(to right, var(--terra), var(--gold));
+      margin: 1.4rem 0 2rem;
+    }
+    .divider.center { margin: 1.4rem auto 2rem; }
+
+    /* ── ABOUT ── */
+    #about {
+      background: linear-gradient(160deg, #1e0e04 0%, #150a02 100%);
+      position: relative;
+    }
+    #about::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(200,151,31,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img {
+      width: 100%; aspect-ratio: 4/5;
+      object-fit: cover; border-radius: 2px;
+      filter: sepia(.3) brightness(.9);
+      display: block;
+    }
+    /* placeholder image using CSS */
+    .about-img-placeholder {
+      width: 100%; aspect-ratio: 4/5;
+      background:
+        linear-gradient(135deg, #3B1F0A 0%, #5C3317 40%, #3B1F0A 100%);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      position: relative; overflow: hidden;
+    }
+    .about-img-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 10px,
+        rgba(200,151,31,.05) 10px, rgba(200,151,31,.05) 11px
+      );
+    }
+    .about-badge {
+      position: absolute; bottom: -1.2rem; right: -1.2rem;
+      width: 110px; height: 110px; border-radius: 50%;
+      background: var(--terra);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(192,98,42,.4);
+    }
+    .about-badge strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 700;
+      color: #fff; line-height: 1;
+    }
+    .about-badge span {
+      font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.8);
+    }
+    .about-text p {
+      font-size: .95rem; line-height: 1.9;
+      color: rgba(245,237,216,.7); margin-bottom: 1.2rem;
+    }
+    .about-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.4rem;
+    }
+    .stat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--gold-lt); line-height: 1;
+    }
+    .stat span {
+      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(245,237,216,.5);
+    }
+
+    /* ── MENU ── */
+    #menu {
+      background: var(--dark);
+      text-align: center;
+    }
+    .menu-header { max-width: 600px; margin: 0 auto 4rem; }
+    .menu-tabs {
+      display: flex; justify-content: center; gap: 0;
+      margin-bottom: 3.5rem;
+    }
+    .tab-btn {
+      background: transparent; border: 1px solid rgba(245,237,216,.15);
+      color: rgba(245,237,216,.5);
+      padding: .6rem 1.8rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: .72rem; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; cursor: pointer;
+      transition: all .3s;
+    }
+    .tab-btn:first-child { border-radius: 1px 0 0 1px; }
+    .tab-btn:last-child  { border-radius: 0 1px 1px 0; }
+    .tab-btn.active {
+      background: var(--terra); border-color: var(--terra);
+      color: #fff;
+    }
+    .tab-btn:hover:not(.active) {
+      border-color: var(--terra); color: var(--terra);
+    }
+
+    .menu-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.6rem;
+      display: none;
+    }
+    .menu-grid.active { display: grid; }
+
+    .menu-card {
+      background: linear-gradient(145deg, rgba(59,31,10,.6) 0%, rgba(26,13,4,.8) 100%);
+      border: 1px solid rgba(200,151,31,.12);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+      text-align: left;
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(200,151,31,.35);
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    }
+    .card-img {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    .card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(26,13,4,.8) 100%);
+    }
+    .card-body { padding: 1.4rem; }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--cream); margin-bottom: .4rem;
+    }
+    .card-desc {
+      font-size: .82rem; line-height: 1.6;
+      color: rgba(245,237,216,.5); margin-bottom: 1rem;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--gold-lt);
+    }
+    .card-badge {
+      font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+      background: rgba(192,98,42,.2); color: var(--terra);
+      padding: .25rem .7rem; border-radius: 1px;
+    }
+    .card-badge.new { background: rgba(200,151,31,.15); color: var(--gold-lt); }
+
+    /* image color per category */
+    .bg-nasi   { background: linear-gradient(135deg,#5C3317,#3B1F0A); }
+    .bg-soto   { background: linear-gradient(135deg,#4a2a10,#7a4020); }
+    .bg-lauk   { background: linear-gradient(135deg,#3d1f0e,#6b3318); }
+    .bg-minum  { background: linear-gradient(135deg,#1a3a2a,#2a5a3a); }
+    .bg-campur { background: linear-gradient(135deg,#3a2a10,#6a4a18); }
+    .bg-snack  { background: linear-gradient(135deg,#4a1010,#8a3020); }
+
+    /* ── GALLERY ── */
+    #gallery {
+      background: linear-gradient(to bottom, #150a02, #1e0e04);
+    }
+    .gallery-header { max-width: 600px; margin-bottom: 3.5rem; }
+    .gallery-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+    .gallery-item {
+      border-radius: 2px; overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    .gallery-item:first-child {
+      grid-column: span 2; grid-row: span 2;
+    }
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .gallery-box {
+      width: 100%; height: 100%; min-height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      transition: transform .4s;
+    }
+    .gallery-item:first-child .gallery-box { min-height: 340px; font-size: 5rem; }
+    .gallery-item:hover .gallery-box { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(26,13,4,.5);
+      display: flex; align-items: flex-end;
+      padding: 1rem;
+      opacity: 0; transition: opacity .3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-label {
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold-lt);
+    }
+
+    /* ── TESTIMONIALS ── */
+    #ulasan {
+      background: var(--dark); text-align: center;
+    }
+    .ulasan-header { max-width: 500px; margin: 0 auto 3.5rem; }
+    .ulasan-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.6rem;
+    }
+    .ulasan-card {
+      background: linear-gradient(145deg,rgba(59,31,10,.5),rgba(26,13,4,.8));
+      border: 1px solid rgba(200,151,31,.1);
+      border-radius: 2px; padding: 2rem;
+      text-align: left; position: relative;
+    }
+    .ulasan-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; line-height: 1;
+      color: var(--terra); opacity: .35;
+      position: absolute; top: .6rem; left: 1.2rem;
+    }
+    .stars { color: var(--gold); font-size: .9rem; margin-bottom: 1rem; }
+    .ulasan-text {
+      font-size: .9rem; line-height: 1.8;
+      color: rgba(245,237,216,.65); margin-bottom: 1.4rem;
+      padding-top: 1rem;
+    }
+    .ulasan-author {
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .author-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .author-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 600; color: var(--cream);
+    }
+    .author-loc {
+      font-size: .7rem; color: rgba(245,237,216,.4);
+      letter-spacing: .06em;
+    }
+
+    /* ── CONTACT / CTA ── */
+    #kontak {
+      background: linear-gradient(160deg,#3B1F0A 0%,#1A0D04 100%);
+      position: relative; overflow: hidden;
+    }
+    #kontak::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,98,42,.15) 0%, transparent 70%);
+    }
+    .kontak-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: start;
+    }
+    .kontak-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem; font-weight: 600;
+      color: var(--cream); margin-bottom: 1rem;
+    }
+    .kontak-info p {
+      font-size: .9rem; line-height: 1.9;
+      color: rgba(245,237,216,.6); margin-bottom: 2rem;
+    }
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; }
+    .info-list li {
+      display: flex; align-items: flex-start; gap: 1rem;
+      font-size: .88rem; color: rgba(245,237,216,.7); line-height: 1.5;
+    }
+    .info-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(192,98,42,.2); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .kontak-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label {
+      font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(245,237,216,.5);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(59,31,10,.3);
+      border: 1px solid rgba(200,151,31,.2);
+      border-radius: 1px; padding: .8rem 1rem;
+      color: var(--cream); font-family: 'Raleway', sans-serif;
+      font-size: .88rem;
+      transition: border-color .3s;
+      outline: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(245,237,216,.25); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: #2a1205; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(200,151,31,.12);
+      padding: 2.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 700; color: var(--gold-lt);
+    }
+    .footer-brand span { color: var(--terra); }
+    .footer-copy {
+      font-size: .72rem; letter-spacing: .08em;
+      color: rgba(245,237,216,.3);
+    }
+    .footer-socials { display: flex; gap: 1rem; }
+    .footer-socials a {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(59,31,10,.6); border: 1px solid rgba(200,151,31,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; text-decoration: none;
+      transition: background .3s, border-color .3s;
+    }
+    .footer-socials a:hover {
+      background: var(--terra); border-color: var(--terra);
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.4rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-img-placeholder { aspect-ratio: 3/2; }
+      .about-badge { right: .5rem; bottom: -.8rem; }
+      .ulasan-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:first-child { grid-column: span 2; }
+      .gallery-item:nth-child(4) { grid-column: span 1; }
+      .kontak-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media(max-width: 600px) {
+      nav ul { display: none; }
+      .hero-title { font-size: 3rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:first-child { grid-column: span 1; }
+      .gallery-item:nth-child(4) { grid-column: span 1; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+
+    /* toast */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 9998;
+      background: var(--terra); color: #fff;
+      padding: .9rem 1.8rem; border-radius: 2px;
+      font-size: .82rem; letter-spacing: .06em;
+      transform: translateY(80px); opacity: 0;
+      transition: all .4s;
+      box-shadow: 0 8px 30px rgba(192,98,42,.4);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Waroeng<span>Satria</span></div>
+  <ul>
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Galeri</a></li>
+    <li><a href="#ulasan">Ulasan</a></li>
+    <li><a href="#kontak" class="nav-cta">Reservasi</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-dots" id="heroDots"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">✦ Cita Rasa Nusantara Sejati ✦</div>
+    <h1 class="hero-title">
+      Waroeng<br /><em>Satria</em>
+    </h1>
+    <p class="hero-sub">
+      Menyajikan kelezatan masakan rumahan Indonesia yang autentik,
+      diracik dengan bumbu pilihan dan cinta sejak 2005.
+    </p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">Lihat Menu</a>
+      <a href="#kontak" class="btn-outline">Buat Reservasi</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Gulir</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-placeholder">🍽️</div>
+      <div class="about-badge">
+        <strong>20+</strong>
+        <span>Tahun<br>Berdiri</span>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">Tentang Kami</p>
+      <h2 class="section-title">Warisan Rasa<br />dari <em>Generasi</em> ke Generasi</h2>
+      <div class="divider"></div>
+      <p>
+        WaroengSatria lahir dari dapur sederhana keluarga Pak Satria pada tahun 2005. Berawal dari semangat melestarikan masakan nenek moyang, kami hadir membawa cita rasa otentik yang tak lekang oleh waktu.
+      </p>
+      <p>
+        Setiap hidangan kami diracik dari bahan-bahan segar pilihan, bumbu rempah alami tanpa MSG berlebihan, dan dimasak dengan penuh perhatian seperti memasak untuk keluarga sendiri.
+      </p>
+      <div class="about-stats">
+        <div class="stat">
+          <strong>50+</strong>
+          <span>Varian Menu</span>
+        </div>
+        <div class="stat">
+          <strong>200+</strong>
+          <span>Porsi / Hari</span>
+        </div>
+        <div class="stat">
+          <strong>4.9★</strong>
+          <span>Rating</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header reveal">
+    <p class="section-label">Menu Kami</p>
+    <h2 class="section-title">Pilihan <em>Hidangan</em> Lezat</h2>
+    <div class="divider center"></div>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" data-tab="nasi">Nasi & Mie</button>
+    <button class="tab-btn" data-tab="soto">Soto & Sup</button>
+    <button class="tab-btn" data-tab="lauk">Lauk Pauk</button>
+    <button class="tab-btn" data-tab="minum">Minuman</button>
+  </div>
+
+  <!-- Nasi -->
+  <div class="menu-grid active" id="tab-nasi">
+    <div class="menu-card reveal">
+      <div class="card-img bg-nasi">🍚</div>
+      <div class="card-body">
+        <div class="card-title">Nasi Goreng Satria</div>
+        <div class="card-desc">Nasi goreng spesial dengan bumbu rahasia, telur kampung, ayam suwir & kerupuk udang.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 18.000</span>
+          <span class="card-badge">Terlaris</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-nasi">🍛</div>
+      <div class="card-body">
+        <div class="card-title">Nasi Campur Jawa</div>
+        <div class="card-desc">Nasi putih dengan sayur lodeh, tempe orek, teri balado, dan sambel terasi.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 20.000</span>
+          <span class="card-badge new">Favorit</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-nasi">🍜</div>
+      <div class="card-body">
+        <div class="card-title">Mie Goreng Jawa</div>
+        <div class="card-desc">Mie goreng kuah kental bumbu jawa, disajikan dengan acar timun dan emping.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 17.000</span>
+          <span class="card-badge">Pedas Tersedia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Soto -->
+  <div class="menu-grid" id="tab-soto">
+    <div class="menu-card reveal">
+      <div class="card-img bg-soto">🥣</div>
+      <div class="card-body">
+        <div class="card-title">Soto Ayam Lamongan</div>
+        <div class="card-desc">Kuah bening kunyit segar, ayam kampung suwir, telur, perkedel, dan bihun.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 22.000</span>
+          <span class="card-badge">Terlaris</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-soto">🍲</div>
+      <div class="card-body">
+        <div class="card-title">Soto Betawi</div>
+        <div class="card-desc">Kuah santan gurih, daging sapi empuk, tomat, kentang goreng, dan emping melinjo.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 25.000</span>
+          <span class="card-badge new">Spesial</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-soto">🥘</div>
+      <div class="card-body">
+        <div class="card-title">Sup Buntut</div>
+        <div class="card-desc">Buntut sapi empuk dalam kaldu bening gurih, wortel, kentang, dan seledri segar.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 45.000</span>
+          <span class="card-badge">Premium</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lauk -->
+  <div class="menu-grid" id="tab-lauk">
+    <div class="menu-card reveal">
+      <div class="card-img bg-lauk">🍗</div>
+      <div class="card-body">
+        <div class="card-title">Ayam Bakar Kecap</div>
+        <div class="card-desc">Ayam kampung marinasi rempah, dibakar dengan kecap manis Jawa dan santan kelapa.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 28.000</span>
+          <span class="card-badge">Terlaris</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-lauk">🐟</div>
+      <div class="card-body">
+        <div class="card-title">Ikan Gurame Bakar</div>
+        <div class="card-desc">Gurame segar 500gr, bumbu kuning pilihan, dibakar sempurna dengan sambal matah.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 55.000</span>
+          <span class="card-badge new">Segar</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-lauk">🥩</div>
+      <div class="card-body">
+        <div class="card-title">Rendang Sapi</div>
+        <div class="card-desc">Daging sapi dimasak lama dengan 40+ bumbu rempah hingga meresap dan empuk sempurna.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 35.000</span>
+          <span class="card-badge">Signature</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minum -->
+  <div class="menu-grid" id="tab-minum">
+    <div class="menu-card reveal">
+      <div class="card-img bg-minum">🥤</div>
+      <div class="card-body">
+        <div class="card-title">Es Teh Manis</div>
+        <div class="card-desc">Teh pilihan diseduh dengan gula aren asli, disajikan dingin dengan es batu segar.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 5.000</span>
+          <span class="card-badge">Terlaris</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-minum">🧃</div>
+      <div class="card-body">
+        <div class="card-title">Es Jeruk Peras</div>
+        <div class="card-desc">Jeruk segar diperas langsung, dicampur sedikit gula aren dan es batu pecah.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 8.000</span>
+          <span class="card-badge new">Segar</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card reveal">
+      <div class="card-img bg-minum">☕</div>
+      <div class="card-body">
+        <div class="card-title">Kopi Tubruk Jawa</div>
+        <div class="card-desc">Kopi robusta lokal giling kasar, diseduh tradisional tanpa filter, aroma khas Jawa.</div>
+        <div class="card-footer">
+          <span class="card-price">Rp 7.000</span>
+          <span class="card-badge">Tradisional</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <p class="section-label">Galeri</p>
+    <h2 class="section-title">Suasana & <em>Hidangan</em></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="gallery-grid max-w-1200 mx-auto reveal">
+    <div class="gallery-item">
+      <div class="gallery-box bg-nasi" style="background:linear-gradient(135deg,#4a2010,#8a4020)">🍽️</div>
+      <div class="gallery-overlay"><span class="gallery-label">Hidangan Utama</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-box bg-soto">🥣</div>
+      <div class="gallery-overlay"><span class="gallery-label">Soto Spesial</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-box" style="background:linear-gradient(135deg,#2a3a1a,#4a6a2a)">🌿</div>
+      <div class="gallery-overlay"><span class="gallery-label">Bumbu Rempah</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-box bg-lauk">🍗</div>
+      <div class="gallery-overlay"><span class="gallery-label">Ayam Bakar</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-box" style="background:linear-gradient(135deg,#2a1a3a,#5a3a7a)">🏮</div>
+      <div class="gallery-overlay"><span class="gallery-label">Suasana Malam</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-box bg-minum">🧋</div>
+      <div class="gallery-overlay"><span class="gallery-label">Minuman Segar</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ULASAN -->
+<section id="ulasan">
+  <div class="ulasan-header reveal">
+    <p class="section-label">Testimoni</p>
+    <h2 class="section-title">Apa Kata <em>Pelanggan</em> Kami</h2>
+    <div class="divider center"></div>
+  </div>
+
+  <div class="ulasan-grid">
+    <div class="ulasan-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="ulasan-text">Rendang Satriya paling enak yang pernah saya makan! Dagingnya empuk banget dan bumbunya meresap sempurna. Sudah jadi langganan rutin tiap minggu.</p>
+      <div class="ulasan-author">
+        <div class="author-avatar">👨</div>
+        <div>
+          <div class="author-name">Budi Santoso</div>
+          <div class="author-loc">Surabaya, Jawa Timur</div>
+        </div>
+      </div>
+    </div>
+    <div class="ulasan-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="ulasan-text">Suasananya nyaman, pelayanannya ramah, dan yang paling penting makanannya TOP! Soto Betawi-nya bikin kangen terus. Harga juga sangat terjangkau.</p>
+      <div class="ulasan-author">
+        <div class="author-avatar">👩</div>
+        <div>
+          <div class="author-name">Sari Dewi</div>
+          <div class="author-loc">Jakarta Selatan</div>
+        </div>
+      </div>
+    </div>
+    <div class="ulasan-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="ulasan-text">Bawa tamu dari luar kota ke sini dan mereka langsung jatuh cinta sama Nasi Goreng Satriya-nya. Katanya ini masakan Indonesia terenak yang pernah mereka coba!</p>
+      <div class="ulasan-author">
+        <div class="author-avatar">👨</div>
+        <div>
+          <div class="author-name">Ahmad Fauzi</div>
+          <div class="author-loc">Bandung, Jawa Barat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAK / RESERVASI -->
+<section id="kontak">
+  <div class="kontak-inner">
+    <div class="kontak-info reveal">
+      <p class="section-label">Hubungi Kami</p>
+      <h2>Reservasi &<br /><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-lt)">Kunjungi</em> Kami</h2>
+      <div class="divider"></div>
+      <p>Kami membuka reservasi meja untuk acara keluarga, rapat kantor, hingga perayaan spesial. Hubungi kami dan kami siap melayani dengan sepenuh hati.</p>
+      <ul class="info-list">
+        <li>
+          <div class="info-icon">📍</div>
+          <div>Jl. Diponegoro No. 47, Kelurahan Sumber, Kecamatan Banjarsari, Surakarta, Jawa Tengah 57134</div>
+        </li>
+        <li>
+          <div class="info-icon">⏰</div>
+          <div>Senin – Sabtu: 07.00 – 21.00 WIB<br />Minggu: 07.00 – 20.00 WIB</div>
+        </li>
+        <li>
+          <div class="info-icon">📞</div>
+          <div>+62 812-3456-7890<br />+62 271-555-1234</div>
+        </li>
+        <li>
+          <div class="info-icon">📧</div>
+          <div>info@waroengsatria.id</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <div class="kontak-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" placeholder="Pak Budi" />
+          </div>
+          <div class="form-group">
+            <label>Nomor HP</label>
+            <input type="tel" placeholder="08xx-xxxx-xxxx" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tanggal Kunjungan</label>
+          <input type="date" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Jumlah Tamu</label>
+            <select>
+              <option>1 – 2 Orang</option>
+              <option>3 – 5 Orang</option>
+              <option>6 – 10 Orang</option>
+              <option>11 – 20 Orang</option>
+              <option>Lebih dari 20 Orang</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Waktu</label>
+            <select>
+              <option>07:00 – 09:00</option>
+              <option>11:00 – 13:00</option>
+              <option>13:00 – 15:00</option>
+              <option>17:00 – 19:00</option>
+              <option>19:00 – 21:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Catatan Khusus</label>
+          <textarea placeholder="Acara ulang tahun, butuh kursi khusus, dll."></textarea>
+        </div>
+        <button class="btn-primary" id="submitBtn" style="border:none;font-family:'Raleway',sans-serif;font-size:.78rem;">
+          Kirim Reservasi ✦
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Waroeng<span>Satria</span></div>
+  <div class="footer-copy">© 2025 WaroengSatria. Semua hak dilindungi.</div>
+  <div class="footer-socials">
+    <a href="#" title="Instagram">📸</a>
+    <a href="#" title="Facebook">📘</a>
+    <a href="#" title="WhatsApp">📱</a>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Reservasi terkirim! Kami akan menghubungi Anda segera.</div>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Menu tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.menu-grid').forEach(g => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Intersection Observer for reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Hero dots
+  const dotsEl = document.getElementById('heroDots');
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('span');
+    const size = Math.random() * 4 + 2;
+    Object.assign(s.style, {
+      width: size + 'px', height: size + 'px',
+      top: Math.random() * 100 + '%',
+      left: Math.random() * 100 + '%',
+      animationDelay: Math.random() * 5 + 's',
+      animationDuration: (Math.random() * 4 + 4) + 's',
+    });
+    dotsEl.appendChild(s);
+  }
+  // keyframes for dots
+  const style = document.createElement('style');
+  style.textContent = `@keyframes dotFloat { 0%,100%{opacity:0;transform:translateY(0)} 50%{opacity:.35;transform:translateY(-12px)} }`;
+  document.head.appendChild(style);
+
+  // Submit toast
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  });
+</script>
+</body>
+</html>
